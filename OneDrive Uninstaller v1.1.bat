@@ -13,14 +13,15 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
   set "DEL=%%a"
 )
 
-   echo --------Windows 10 OneDrive Uninstaller--------
+   echo ------Windows 10 OneDrive Uninstaller v1.1------
    echo.
-@rem This code block detects if the script is being running with admin PRIVILEGES If it isn't it pauses and then quits
+   
+@rem This code block detects if the script is being running with admin privileges. If it isn't it pauses and then quits.
 NET SESSION >nul 2>&1
 IF %ERRORLEVEL% EQU 0 (
 
 
-   echo        Administrator PRIVILEGES Detected!
+   echo        Administrator Privileges Detected!
    echo.
 ) ELSE (
 
@@ -30,7 +31,7 @@ IF %ERRORLEVEL% EQU 0 (
    call :colorEcho 0C "#                                                                 #"
    echo.
    call :colorEcho 0C "#"
-   call :colorEcho 07 "    This script must be run as administrator to work properly!"
+   call :colorEcho 07 "    This script must be run as administrator to work properly."
    call :colorEcho 0C "    #"
    echo.
    call :colorEcho 0C "#"
@@ -56,7 +57,13 @@ IF %ERRORLEVEL% EQU 0 (
    echo.
    call :colorEcho 0C "  This script will completely and permanently"
    echo.
-   call :colorEcho 0C "     remove OneDrive from your computer!"
+   call :colorEcho 0C "      remove OneDrive from your computer."
+   echo.
+   call :colorEcho 0C "        Make sure all OneDrive documents"   
+   echo.
+   call :colorEcho 0C "       that are stored locally are fully"
+   echo.
+   call :colorEcho 0C "          backed up before proceeding."   
    echo.
    echo -----------------------------------------------
    echo.
@@ -72,11 +79,10 @@ IF %ERRORLEVEL% EQU 0 (
 @rem https://techjourney.net/disable-or-uninstall-onedrive-completely-in-windows-10/
 
 
-@rem Terminate any process of OneDrive
+@rem Terminate any OneDrive process
 :PROCESSKILL
    echo.
    echo Terminating OneDrive process.
-   echo.
    
 taskkill /f /im OneDrive.exe
 
@@ -99,7 +105,7 @@ GOTO CLEAN
 
 :64BIT
    echo.
-   echo This is a 64-bit operating system
+   echo This is a 64-bit operating system.
    echo Removing OneDrive setup files.
    
 %SystemRoot%\SysWOW64\OneDriveSetup.exe /uninstall
@@ -115,14 +121,19 @@ GOTO CLEAN
    rd "%LocalAppData%\Microsoft\OneDrive" /Q /S
    rd "%ProgramData%\Microsoft OneDrive" /Q /S
    rd "C:\OneDriveTemp" /Q /S
+   
+   echo.
+   call :colorEcho 0C "If you see 'access denied' errors here, reboot and run this batch file again."
+   echo.
+
 
 
 @rem Delete and remove OneDrive in file explorer folder tree registry key
    echo.
    echo Removing OneDrive registry keys.
    
-REG Delete "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
-REG Delete "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
+   IF EXIST "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" REG Delete "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
+   IF EXIST "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" REG Delete "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
 
    echo.
    echo OneDrive Uninstall and cleaning completed.
