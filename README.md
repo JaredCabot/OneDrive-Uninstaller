@@ -14,7 +14,7 @@ In any case, be sure to BACK UP YOUR STUFF!! (You should be doing this regularly
 Also, if you are unsure, take an image of your HDD, or at least set a restore point or something... anything... (please).....
 
 
-Let me know if you fins a bug or if you want any improvements or features. Find me on Reddit or something.
+Let me know if you find a bug or if you want any improvements or features. Find me on Reddit or something.
 
 
 
