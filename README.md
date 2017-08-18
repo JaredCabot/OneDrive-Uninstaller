@@ -3,8 +3,7 @@ This is a batch script to completely uninstall OneDrive in Windows 10.
 
 # READ THIS STUFF, FOR REALS BROOO!!!
 It'll only take a moment and could save you hours of grief...
-
-Simply download the 'Onedrive Uninstaller v1.0.bat' then run the script in Administrator mode (by right clicking on the file and selecting 'Run as Administrator' to completely and totally remove OneDrive.
+Simply download the latest 'Onedrive Uninstaller' batch file then run the script in Administrator mode (by right clicking on the file and selecting 'Run as Administrator' to completely and totally remove OneDrive.
 
 Be aware that removing OneDrive WILL break access to existing OneDrive accounts and delelete locally stored files on the machine you run this script on.
 It may also break access to roaming profiles, App Store configuration, and cloud based windows settings (for example, if you use a Microsoft account instead of a local account to log on to your machine).
