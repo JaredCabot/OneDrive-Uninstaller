@@ -1,6 +1,6 @@
 @rem OneDrive Complete uninstaller batch process for Windows 10.
 @rem Run as administrator to completely delete all OneDrive components and files.
-@rem Written by TERRA Operative - 2020/03/02. V1.4
+@rem Written by TERRA Operative - 2020/03/02 | Version 1.4
 @rem Feel free to distribute freely as long as you leave this entire file unchanged and intact,
 @rem and if you do make changes and adaptions, don't be a dick about not attributing where due.
 @rem And most importantly, peace out and keep it real.
@@ -78,9 +78,14 @@ IF %ERRORLEVEL% EQU 0 (
 @rem The following is based on info from here written by 'LK':
 @rem https://techjourney.net/disable-or-uninstall-onedrive-completely-in-windows-10/
 
-
-@rem Terminate any OneDrive process
+@rem Close Windows Explorer to avoid errors when deleting the remaining OneDrive files
 :PROCESSKILL
+   echo.
+   echo Terminating Windows Explorer process.
+   
+taskkill /f /im explorer.exe
+
+@rem Terminate all OneDrive processes
    echo.
    echo Terminating OneDrive process.
    
@@ -117,9 +122,9 @@ GOTO CLEAN
    echo.
    echo Removing remaining OneDrive folders.
    
-   rd "%UserProfile%\OneDrive" /s /q
-   rd "%LocalAppData%\Microsoft\OneDrive" /s /q
-   rd "%ProgramData%\Microsoft OneDrive" /s /q
+   rd "%USERPROFILE%\OneDrive" /s /q
+   rd "%LOCALAPPDATA%\Microsoft\OneDrive" /s /q
+   rd "%PROGRAMDATA%\Microsoft OneDrive" /s /q
    rd "C:\OneDriveTemp" /s /q
    del "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk" /s /f /q
    
@@ -137,8 +142,8 @@ GOTO CLEAN
    echo.
    echo Removing OneDrive registry keys.
    
-   REG Delete "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
-   REG Delete "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
+   REG DELETE "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
+   REG DELETE "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f
    REG ADD "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v System.IsPinnedToNameSpaceTree /d "0" /t REG_DWORD /f
 
    echo.
@@ -146,13 +151,24 @@ GOTO CLEAN
    echo 'The system was unable to find the specified registry key or value.' errors are ok,
    echo it means the Registry entries already don't exist.
    echo.
+  
+  
+@rem Restart Windows Explorer process
+   echo.
+   echo Restarting Windows Explorer.
+   
+start explorer.exe
+
+   
+   echo.
    echo -----------------------------------------------
    echo.
    echo OneDrive Uninstall and cleaning completed.
    echo.
-
+   
+   
    PAUSE
-   echo So long and thanks for all the fish...
+   echo So Long, and Thanks for All the Fish...
    PING -n 2 127.0.0.1>nul
    EXIT /B 1
 
