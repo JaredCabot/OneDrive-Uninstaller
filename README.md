@@ -2,26 +2,33 @@
 A batch script to completely uninstall OneDrive in Windows 10 and 11.
 
 # READ THIS STUFF, FOR REALS BROOO!!!
-Download the latest 'Onedrive Uninstaller' batch file and run it as Administrator (right click the file, 'Run as Administrator') to completely remove OneDrive.
+Download the latest 'OneDrive Uninstaller' batch file and run it as Administrator (right click the file, 'Run as Administrator').
 
-Removing OneDrive WILL break access to existing OneDrive accounts and delete locally stored files. It may also break roaming profiles, App Store config, and cloud based Windows settings (like using a Microsoft account to log in). If you don't use that stuff, you're home free (but check anyway).
+Before you run it:
+- Right-click your OneDrive folder and choose **Always keep on this device**. Online-only files can't be moved once OneDrive is gone.
+- Sign out any other users. Explorer gets closed while it runs.
+- On a work/school PC, check with IT first. The script warns you if the PC looks managed.
 
-Either way, BACK UP YOUR STUFF!! Set a restore point or take a drive image if you're unsure.
+Want to see what it would do first? Run it from an admin command prompt with `/dryrun`. It logs every step and changes nothing.
 
-# What V2.0 does:
-- Kills all OneDrive processes first so nothing's locked.
-- Scans Startup and removes any OneDrive entries.
-- Finds and deletes OneDrive Scheduled Tasks.
-- Removes the Active Setup key that reinstalls OneDrive for new users.
-- Cleans every user profile, not just yours (including their offline registry).
-- Takes ownership of locked files so they actually delete.
-- Deletes all known OneDrive files, folders and registry keys for Windows 10 and 11.
-- Clears OneDrive environment variables, cached credentials and prefetch files.
-- Resets Desktop/Documents/Pictures back to local folders if OneDrive hijacked them.
-- Blocks OneDrive from reinstalling (DisableFileSyncNGSC policy).
+Removing OneDrive WILL break access to existing OneDrive accounts. Set a restore point or take a drive image if you're unsure.
+
+# What V2.1 does
+For every account on the PC (including the Default profile that new accounts are copied from):
+- Moves Desktop/Documents/Pictures/Music/Videos/Downloads back out of OneDrive if OneDrive redirected them. Only the folders that were actually redirected get touched.
+- Renames each OneDrive folder (including business "OneDrive - Company" folders) to `<name> (backup)`. **Nothing in your OneDrive folder is deleted.**
+- Removes OneDrive's settings, startup entries, File Explorer sidebar entries, environment variables and app files.
+
+Then, machine-wide:
+- Runs the OneDrive uninstallers (per-user and per-machine) and waits for them to finish.
+- Removes the scheduled tasks, Active Setup entries, sync-root registrations, overlay icons, leftover files and uninstall entries.
+- Clears cached OneDrive credentials for the account running the script.
+- Sets the `DisableFileSyncNGSC` policy so OneDrive can't run. It doesn't stop Windows or Office updates from putting the installer back, but the policy stops it running if they do.
+
+Every registry key is exported to a numbered `.reg` file before it's changed. Everything is logged to `C:\OneDrive-Uninstaller\run-N\`. Double-click a `.reg` file to undo that change.
 
 # Heads up
-Run it as Administrator. If you see any 'access denied' messages, reboot and run it once more. That's normal.
+When it finishes it tells you how many problems it hit (if any) and offers to reboot. Reboot so every change takes effect. If it reported locked files, run it once more after the reboot.
 
 Let me know if you find a bug or want any features. Find me on Reddit or something.
 
