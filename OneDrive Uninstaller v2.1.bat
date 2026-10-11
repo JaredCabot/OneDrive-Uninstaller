@@ -90,11 +90,13 @@ exit /b 0
 @rem ===========================================================================
 :CHECKMANAGED
 set "MANAGED="
-reg query "HKLM\SOFTWARE\Policies\Microsoft\OneDrive" >nul 2>&1 && set "MANAGED=1"
+@rem Only policies that make OneDrive sign in or move folders automatically mean an
+@rem organisation runs it. Debloat tools set blocking ones (e.g. KFMBlockOptIn) - ignore those.
+for %%V in (SilentAccountConfig KFMSilentOptIn KFMBlockOptOut) do reg query "HKLM\SOFTWARE\Policies\Microsoft\OneDrive" /v %%V >nul 2>&1 && set "MANAGED=1"
 dsregcmd /status 2>nul | findstr /r /c:"AzureAdJoined *: YES" /c:"DomainJoined *: YES" >nul && set "MANAGED=1"
 if not defined MANAGED goto :eof
 echo.
-call :log "This PC looks work/school managed (domain, Entra ID or OneDrive policy)." "[91m"
+call :log "This PC looks work/school managed (domain or Entra ID joined, or OneDrive set up by policy)." "[91m"
 call :log "Your organisation may rely on OneDrive and may reinstall it. Check with IT first." "[91m"
 goto :eof
 
