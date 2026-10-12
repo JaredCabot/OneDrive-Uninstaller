@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: README
+    url: https://github.com/JaredCabot/OneDrive-Uninstaller#readme
+    about: What the script does, what to do before running it, and how to undo changes.

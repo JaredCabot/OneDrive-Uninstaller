@@ -1,0 +1,94 @@
+name: Bug report
+description: Something does not work as the README describes
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. The more of this you can fill in, the faster the problem can be found.
+
+        **The log answers most of the questions here.** Each run writes `log.txt` to `%SystemDrive%\OneDrive-Uninstaller\run-N\` (usually C:\OneDrive-Uninstaller). Attach the log from the run that went wrong, or paste the part around the problem.
+  - type: input
+    id: version
+    attributes:
+      label: Script version
+      description: From the file name or the first line of the log.
+      placeholder: "v2.1"
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows edition and build
+      description: Run winver to see it.
+      placeholder: "Windows 11 Pro 24H2 (26100.4061)"
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: How was it run?
+      options:
+        - "As Administrator"
+        - "As Administrator, with /dryrun"
+        - "Not as Administrator"
+    validations:
+      required: true
+  - type: dropdown
+    id: onedrive
+    attributes:
+      label: Which OneDrive accounts were on the PC?
+      options:
+        - "Personal"
+        - "Work or school"
+        - "Both"
+        - "Not sure"
+    validations:
+      required: true
+  - type: dropdown
+    id: managed
+    attributes:
+      label: Is the PC managed by an organisation?
+      description: The script warns you if it looks managed (domain, Intune or similar).
+      options:
+        - "No"
+        - "Yes"
+        - "Not sure"
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: What went wrong?
+      options:
+        - "The script stopped or showed an error"
+        - "Folders were not moved back out of OneDrive"
+        - "Something was removed that should not have been"
+        - "OneDrive or parts of it are still there"
+        - "OneDrive came back after an update"
+        - "Something else"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+      description: Include any message the program or the instrument showed, word for word.
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Log
+      description: Attach log.txt, or paste the lines around the problem.
+      render: text
+    validations:
+      required: false
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots, and anything you had already done to OneDrive before running the script.
+    validations:
+      required: false
