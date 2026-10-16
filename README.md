@@ -30,6 +30,8 @@ Every registry key is exported to a numbered `.reg` file before it's changed. Ev
 # Heads up
 When it finishes it tells you how many problems it hit (if any) and offers to reboot. Reboot so every change takes effect. If it reported locked files, run it once more after the reboot.
 
+After you sign back in, an empty `HKCU\Software\Microsoft\OneDrive` registry key may show up again. That's Windows Security (`SecurityHealthService.exe`) checking whether OneDrive is installed, and the check creates the key as a side effect. It's not OneDrive coming back. It's harmless, so leave it alone.
+
 Let me know if you find a bug or want any features. Find me on Reddit or something.
 
 Peace out.
